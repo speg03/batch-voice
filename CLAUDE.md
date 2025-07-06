@@ -39,59 +39,68 @@
 
 ## リポジトリ構造
 
-- `docs/` - プロジェクトドキュメント
-  - `system-design.md` - システム設計書
-  - `architecture.md` - アーキテクチャ設計書
-  - `technology-decisions.md` - 技術選定書
-- `.claude/` - Claude Code 設定ディレクトリ
+```
+batch-voice/
+├── docs/                   # ドキュメント
+│   ├── system-design.md    # システム設計書
+│   ├── architecture.md     # アーキテクチャ設計書
+│   └── technology-decisions.md # 技術選定書
+├── backend/                # バックエンド（実装予定）
+├── frontend/               # フロントエンド（実装予定）
+├── scripts/                # セットアップスクリプト
+│   └── setup-localstack.sh # LocalStack初期化
+├── docker-compose.yml      # Docker構成
+├── Makefile               # 開発コマンド
+├── .env.example           # 環境設定例
+├── .gitignore             # Git除外設定
+└── .claude/               # Claude Code設定
+```
 
 ## 開発状況
 
 プロジェクトは設計段階です。基本設計書が完成し、これから実装フェーズに入ります。
 
-## 開発コマンド
+## ローカル開発環境
 
-実装開始後、以下のコマンドが使用される予定です：
-
-### バックエンド (FastAPI)
+### セットアップ
 ```bash
-# 依存関係インストール
-pip install -r requirements.txt
+# 環境設定ファイルをコピー
+cp .env.example .env
 
-# 開発サーバー起動
-uvicorn main:app --reload
+# LocalStackとインフラサービスを起動・セットアップ
+make setup
 
-# テスト実行
-pytest
-
-# リント
-flake8 .
-black .
+# 全サービスを起動
+make up
 ```
 
-### フロントエンド (React)
+### 開発コマンド
 ```bash
-# 依存関係インストール
-npm install
+# インフラのみ起動（開発時推奨）
+make up-infra
 
-# 開発サーバー起動
-npm run dev
+# 全サービス起動
+make up-full
 
-# ビルド
-npm run build
+# ログ確認
+make logs
 
-# テスト実行
-npm test
+# サービス停止
+make down
 
-# リント
-npm run lint
+# 環境リセット
+make clean
+
+# LocalStackの状態確認
+make localstack-status
 ```
 
-### Docker
-```bash
-# 開発環境起動
-docker-compose up -d
+### 利用可能なサービス
+- **LocalStack**: http://localhost:4566 (AWS サービスエミュレーション)
+- **API**: http://localhost:8000 (実装後)
+- **Frontend**: http://localhost:3000 (実装後)
 
-# 停止
-docker-compose down
-```
+### AWS サービス (LocalStack)
+- **DynamoDB**: batch-voice-users, batch-voice-jobs, batch-voice-results
+- **S3**: batch-voice-files
+- **SQS**: batch-voice-jobs
