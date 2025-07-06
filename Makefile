@@ -17,13 +17,13 @@ help:
 # Setup LocalStack resources
 setup:
 	@echo "Setting up LocalStack resources..."
-	docker-compose up -d localstack
+	docker compose up -d localstack
 	@sleep 10
 	./scripts/setup-localstack.sh
 
 # Start all services
 up:
-	docker-compose up -d
+	docker compose up -d
 	@echo "Services started. Access:"
 	@echo "  - LocalStack: http://localhost:4566"
 	@echo "  - API: http://localhost:8000"
@@ -31,24 +31,24 @@ up:
 
 # Start infrastructure only
 up-infra:
-	docker-compose up -d localstack
+	docker compose up -d localstack
 
 # Start with full application
 up-full:
-	docker-compose --profile full up -d
+	docker compose --profile full up -d
 
 # Stop all services
 down:
-	docker-compose down
+	docker compose down
 
 # View logs
 logs:
-	docker-compose logs -f
+	docker compose logs -f
 
 # Clean up
 clean:
-	docker-compose down -v
-	docker-compose rm -f
+	docker compose down -v
+	docker compose rm -f
 	docker volume prune -f
 
 # Install dependencies (placeholder)
@@ -76,7 +76,7 @@ lint:
 
 # Development commands
 dev-api:
-	docker-compose up -d localstack
+	docker compose up -d localstack
 	@echo "Infrastructure started. Run your API locally with:"
 	@echo "cd backend && uvicorn main:app --reload"
 
@@ -95,6 +95,6 @@ localstack-status:
 	curl -s http://localhost:4566/health | jq .
 
 localstack-reset:
-	docker-compose restart localstack
+	docker compose restart localstack
 	@sleep 10
 	./scripts/setup-localstack.sh
