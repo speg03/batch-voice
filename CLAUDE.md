@@ -21,23 +21,28 @@
 
 ### バックエンド
 - FastAPI (Python)
-- SQLAlchemy (ORM)
-- Celery + Redis (タスクキュー)
+- boto3 / aiobotocore (AWS SDK)
+- SQS + ECS Tasks (バッチ処理)
 
 ### 文字起こし
 - OpenAI Whisper API
 
 ### データベース
-- PostgreSQL
+- DynamoDB
 
 ### インフラ
 - Docker + Docker Compose
-- AWS S3 / MinIO (ファイルストレージ)
+- AWS S3 (ファイルストレージ)
+- AWS DynamoDB (データベース)
+- AWS SQS (メッセージキュー)
+- AWS ECS (バッチ処理)
 
 ## リポジトリ構造
 
 - `docs/` - プロジェクトドキュメント
   - `system-design.md` - システム設計書
+  - `architecture.md` - アーキテクチャ設計書
+  - `technology-decisions.md` - 技術選定書
 - `.claude/` - Claude Code 設定ディレクトリ
 
 ## 開発状況
